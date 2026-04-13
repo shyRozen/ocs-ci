@@ -1183,7 +1183,7 @@ def get_rgw_endpoint():
                 rgw_endpoint = each["ip_address"]
             else:
                 logger.info("using IPv4 as rgw endpoint")
-                rgw_endpoint = each["ip_address"]
+                rgw_endpoint = f'[{each["ip_address"]}]'
             return rgw_endpoint
     if not rgw_endpoint:
         err_msg = "No RGW endpoint found"

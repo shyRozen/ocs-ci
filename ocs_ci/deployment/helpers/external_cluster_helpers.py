@@ -1180,10 +1180,10 @@ def get_rgw_endpoint():
             elif config.DEPLOYMENT.get("ipv6"):
                 logger.info("using IPv6 as rgw endpoint")
                 # This is a workaround for DFBUGS-5859 till 4.22 rgw must use hostname in ipv6
-                rgw_endpoint = each["ip_address"]
+                rgw_endpoint = f'[{each["ip_address"]}]'
             else:
                 logger.info("using IPv4 as rgw endpoint")
-                rgw_endpoint = f'[{each["ip_address"]}]'
+                rgw_endpoint = each["ip_address"]
             return rgw_endpoint
     if not rgw_endpoint:
         err_msg = "No RGW endpoint found"

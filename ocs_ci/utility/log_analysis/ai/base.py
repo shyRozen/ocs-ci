@@ -125,12 +125,18 @@ def get_backend(backend_name: str, **kwargs) -> AIBackend:
         )
 
         return AnthropicBackend(**kwargs)
+    elif backend_name == "nim":
+        from ocs_ci.utility.log_analysis.ai.nim_backend import (
+            NimBackend,
+        )
+
+        return NimBackend(**kwargs)
     elif backend_name == "none":
         return NoOpBackend()
     else:
         raise ValueError(
             f"Unknown AI backend: {backend_name}. "
-            f"Choose from: claude-code, anthropic, none"
+            f"Choose from: claude-code, anthropic, nim, none"
         )
 
 

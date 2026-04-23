@@ -49,7 +49,7 @@ def main(argv=None):
     )
     parser.add_argument(
         "--ai-backend",
-        choices=["claude-code", "anthropic", "none"],
+        choices=["claude-code", "anthropic", "nim", "none"],
         default="claude-code",
         help="AI backend to use (default: claude-code)",
     )

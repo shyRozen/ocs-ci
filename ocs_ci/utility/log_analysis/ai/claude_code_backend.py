@@ -177,7 +177,8 @@ class ClaudeCodeBackend(AIBackend):
         except Exception as e:
             logger.warning(
                 f"Agentic classification failed for {test_name}, "
-                f"falling back to non-agentic: {e}"
+                f"falling back to non-agentic: {e}",
+                exc_info=True,
             )
 
         # Fallback: non-agentic single-turn classification
@@ -578,6 +579,10 @@ class ClaudeCodeBackend(AIBackend):
         # Extract classification JSON from the result text
         result_text = response.get("result", "")
         if not result_text:
+            logger.debug(
+                f"Empty result from agentic call — raw response keys: {list(response.keys())}, "
+                f"full response: {str(response)[:2000]}"
+            )
             raise AIBackendError(
                 f"Empty result from Claude Code agentic call "
                 f"(subtype={response.get('subtype')}, num_turns={num_turns})"

@@ -264,6 +264,11 @@ class FailureClassifier:
                         analysis_dict.get("session_id", ""),
                     )
                     analysis_dict["session_file"] = session_file
+                    if session_file:
+                        logger.info(
+                            f"Agentic session saved: {session_file} "
+                            f"(session_id={analysis_dict.get('session_id', 'unknown')})"
+                        )
 
                 # Merge known issue matches if any (partial matches)
                 if known_matches:

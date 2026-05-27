@@ -52,7 +52,7 @@ if is_collect_only:
 else:
     ocs_version = get_ocs_version_from_csv(only_major_minor=True)
 
-if ocs_version >= VERSION_4_22:
+if ocs_version and ocs_version >= VERSION_4_22:
     ALERT_MAP.update(
         {
             constants.ALERT_CLUSTERWARNINGSTATE: 0,
@@ -97,7 +97,7 @@ def get_alert_params():
             "custom-odf-core-pod-restarted.yaml",
         ),
     ]
-    if ocs_version >= VERSION_4_22:
+    if ocs_version and ocs_version >= VERSION_4_22:
         params.extend(
             [
                 (

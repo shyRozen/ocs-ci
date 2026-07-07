@@ -266,7 +266,7 @@ class VSPHEREBASE(Deployment):
         time.sleep(self.wait_time)
 
         # wait for nodes to be in READY state
-        wait_for_nodes_status(timeout=300)
+        wait_for_nodes_status(timeout=600)
 
     def delete_disks(self):
         """
@@ -1141,11 +1141,12 @@ class VSPHEREUPI(VSPHEREBASE):
                 time.sleep(1800)
                 logger.info("waiting for bootstrap to complete")
                 try:
+                    bootstrap_timeout = 7200
                     run_cmd(
                         f"{self.installer} wait-for bootstrap-complete "
                         f"--dir {self.cluster_path} "
                         f"--log-level {log_cli_level}",
-                        timeout=3600,
+                        timeout=bootstrap_timeout,
                     )
                 except (CommandFailed, TimeoutExpired) as e:
                     err = str(e)
@@ -1206,7 +1207,7 @@ class VSPHEREUPI(VSPHEREBASE):
                 # multus deployment need more time to generate CSRs
                 is_multus_enabled = config.ENV_DATA.get("is_multus_enabled")
                 csr_timeout = (
-                    4800 if is_multus_enabled else (2400 if num_nodes >= 6 else 1500)
+                    4800 if is_multus_enabled else (2400 if num_nodes >= 6 else 2400)
                 )
                 wait_for_all_nodes_csr_and_approve(timeout=csr_timeout, sleep=10)
 
@@ -1219,11 +1220,12 @@ class VSPHEREUPI(VSPHEREBASE):
 
                 # wait for install to complete
                 logger.info("waiting for install to complete")
+                install_timeout = 7200
                 run_cmd(
                     f"{self.installer} wait-for install-complete "
                     f"--dir {self.cluster_path} "
                     f"--log-level {log_cli_level}",
-                    timeout=3600,
+                    timeout=install_timeout,
                 )
 
                 # Approving CSRs here in-case if any exists

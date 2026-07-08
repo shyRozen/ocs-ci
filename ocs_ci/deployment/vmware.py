@@ -1135,10 +1135,10 @@ class VSPHEREUPI(VSPHEREBASE):
                 # configured) to redirect client access through proxy server.
                 update_kubeconfig_with_proxy_url_for_client(self.kubeconfig)
                 logger.info(
-                    "Waiting 10 minutes to allow cluster infrastructure to stabilize "
+                    "Waiting 30 minutes to allow cluster infrastructure to stabilize "
                     "before checking bootstrap status"
                 )
-                time.sleep(600)
+                time.sleep(1800)
                 logger.info("waiting for bootstrap to complete")
                 try:
                     run_cmd(
